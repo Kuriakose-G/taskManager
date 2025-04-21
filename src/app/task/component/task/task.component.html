@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="header-box">
+        <h2 class="main-heading">Task Manager</h2>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top: -10px;">Task List</h3>
+
+        <div class="task-item heading">
+            <strong>Title</strong>
+            <span class="description">Description</span>
+            <span class="status"><em>Status</em></span>
+        </div>
+
+        <div>
+            <div *ngFor="let task of tasks" class="task-item">
+                <strong>{{ task.title }}</strong>
+                <span class="description">{{ task.description }}</span>
+                <span class="status">
+                    <span [ngClass]="{
+              'status-todo': task.status === 'To Do',
+              'status-inprogress': task.status === 'In Progress',
+              'status-done': task.status === 'Done'
+            }">{{ task.status }}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-new">
+        <h3>Add New Task</h3>
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input id="title" [(ngModel)]="newTask.title" placeholder="Title" />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" [(ngModel)]="newTask.description" placeholder="Description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" [(ngModel)]="newTask.status">
+                <option value="" disabled selected>Select status</option>
+                <option value="To Do">To Do</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Done">Done</option>
+            </select>
+        </div>
+
+        <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+
+        <button (click)="addTask()">Add Task</button>
+    </div>
+</div>
+
+<div *ngIf="showAlert" class="alert-overlay">
+    <div class="alert-box">
+        <p class="alert-message">Task added successfully!</p>
+        <div class="color"></div>
+    </div>
+</div>
